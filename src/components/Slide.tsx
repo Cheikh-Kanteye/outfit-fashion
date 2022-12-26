@@ -4,7 +4,7 @@ import React from "react";
 const { width, height } = Dimensions.get("screen");
 
 interface SlideProps {
-  title: String;
+  title: string;
   right?: boolean;
 }
 
@@ -22,11 +22,12 @@ const Slide = ({ right, title }: SlideProps) => {
           height: 100,
           justifyContent: "center",
           transform,
+          overflow: "hidden",
         }}
       >
         <Text
           style={{
-            fontSize: 76,
+            fontSize: 70,
             lineHeight: 76,
             fontFamily: "SFProText-Bold",
             textAlign: "center",
@@ -39,4 +40,5 @@ const Slide = ({ right, title }: SlideProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default Slide;

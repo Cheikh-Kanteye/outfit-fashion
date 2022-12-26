@@ -1,13 +1,18 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+/* eslint-disable import/no-default-export */
+import type { ReactElement } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Asset } from "expo-asset";
 import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
-import { InitialState, NavigationContainer } from "@react-navigation/native";
+import type { InitialState } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text } from "react-native";
+import { ActivityIndicator } from "react-native";
 
-const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY-${Constants.manifest.sdkVersion}`;
+import { Box } from "../constants/Theme";
+
+const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY-${Constants.manifest?.sdkVersion}`;
 
 export type FontSource = Parameters<typeof Font.loadAsync>[0];
 const usePromiseAll = (promises: Promise<void | void[]>[], cb: () => void) =>
@@ -21,6 +26,8 @@ const usePromiseAll = (promises: Promise<void | void[]>[], cb: () => void) =>
 const useLoadAssets = (assets: number[], fonts: FontSource): boolean => {
   const [ready, setReady] = useState(false);
   usePromiseAll(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     [Font.loadAsync(fonts), ...assets.map((asset) => Asset.loadAsync(asset))],
     () => setReady(true)
   );
@@ -57,12 +64,16 @@ const LoadAssets = ({ assets, fonts, children }: LoadAssetsProps) => {
     }
   }, [isNavigationReady]);
   const onStateChange = useCallback(
-    async (state: any) =>
+    async (state: unknown) =>
       await AsyncStorage.setItem(NAVIGATION_STATE_KEY, JSON.stringify(state)),
     []
   );
   if (!ready || !isNavigationReady) {
-    return <Text>Loading asets ...</Text>;
+    return (
+      <Box flex={1} alignItems={"center"} justifyContent={"center"}>
+        <ActivityIndicator size={"large"} color={"red"} />
+      </Box>
+    );
   }
   return (
     <NavigationContainer {...{ onStateChange, initialState }}>

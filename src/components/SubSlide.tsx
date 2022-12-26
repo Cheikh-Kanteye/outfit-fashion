@@ -2,8 +2,8 @@ import { View, Text } from "react-native";
 import React from "react";
 
 interface SubSlideProps {
-  subtitle: String;
-  description: String;
+  subtitle: string;
+  description: string;
 }
 
 const SubSlide = ({ subtitle, description }: SubSlideProps) => {
@@ -19,7 +19,7 @@ const SubSlide = ({ subtitle, description }: SubSlideProps) => {
         style={{
           textAlign: "center",
           fontFamily: "SFProText-SemiBold",
-          fontSize: 30,
+          fontSize: 24,
         }}
       >
         {subtitle}
@@ -28,7 +28,7 @@ const SubSlide = ({ subtitle, description }: SubSlideProps) => {
         style={{
           textAlign: "center",
           fontFamily: "SFProText-Regular",
-          fontSize: 18,
+          fontSize: 16,
           paddingHorizontal: 24,
         }}
       >
@@ -38,4 +38,5 @@ const SubSlide = ({ subtitle, description }: SubSlideProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default SubSlide;
